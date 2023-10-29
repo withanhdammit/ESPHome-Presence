@@ -13,8 +13,8 @@ cards:
     card:
       type: entities
       entities:
-        - entity: update.sensor_halfbath_firmware
-          name: Half Bath Firmware
+        - entity: update.presence_firmware
+          name: Presence Firmware
           secondary_info: last-changed
         - entity: button.presence_device_restart
         - entity: button.presence_ld2410_restart
