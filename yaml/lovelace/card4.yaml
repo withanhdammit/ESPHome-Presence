@@ -1,32 +1,32 @@
 type: entities
 entities:
-  - entity: sensor.half_bath_temp
+  - entity: sensor.presence_temp
     secondary_info: last-changed
-  - entity: sensor.half_bath_rel_humidity
+  - entity: sensor.presence_rel_humidity
     secondary_info: last-changed
-  - entity: sensor.half_bath_abs_humidity
+  - entity: sensor.presence_abs_humidity
     secondary_info: last-changed
-  - entity: sensor.half_bath_breath_voc
+  - entity: sensor.presence_breath_voc
     secondary_info: last-changed
-  - entity: sensor.half_bath_co2
+  - entity: sensor.presence_co2
     secondary_info: last-changed
-  - entity: sensor.half_bath_gas_resistance
+  - entity: sensor.presence_gas_resistance
     secondary_info: last-changed
-  - entity: sensor.half_bath_pressure
+  - entity: sensor.presence_pressure
     secondary_info: last-changed
-  - entity: sensor.half_bath_iaq_level
+  - entity: sensor.presence_iaq_level
     secondary_info: last-changed
-  - entity: sensor.half_bath_iaq
+  - entity: sensor.presence_iaq
     secondary_info: last-changed
-  - entity: sensor.half_bath_iaq_accuracy
+  - entity: sensor.presence_iaq_accuracy
     secondary_info: last-changed
-  - entity: sensor.half_bath_elevation
+  - entity: sensor.presence_elevation
     secondary_info: last-changed
-  - entity: sensor.half_bath_dewpoint
+  - entity: sensor.presence_dewpoint
     secondary_info: last-changed
-  - entity: sensor.half_bath_sealevel_inhg
+  - entity: sensor.presence_sealevel_inhg
     secondary_info: last-changed
-  - entity: sensor.half_bath_sealevel_hpa
+  - entity: sensor.presence_sealevel_hpa
     secondary_info: last-changed
 title: Environment
 state_color: true
