@@ -8,22 +8,9 @@
 * Gauge
 * Grid
 
-Card 1
-
-<img src=/pics/card1.png width=200>
-
-Card 2
-
-<img src=/pics/card2.png width=200>
-
-Card 3
-
-<img src=/pics/card3.png width=200>
-
-Card 4
-
-<img src=/pics/card4.png width=200>
-
-Card 5
-
-<img src=/pics/card5.png width=200>
+<table>
+  <tr><td align="center">Card 1</td><td align="center">Card 2</td><td align="center">Card 3</td></tr>
+  <tr><td><img src=/pics/card1.png width=200 valign=top></td><td><img src=/pics/card2.png width=200 valign=top></td><td><img src=/pics/card3.png width=200 valign=top></td></tr>
+  <tr><td align=center>Card 4</td><td align=center>Card 5</td></tr>
+  <tr><td><img src=/pics/card4.png width=200 valign=top></td><td><img src=/pics/card5.png width=200 valign=top></td></tr>
+</table>
