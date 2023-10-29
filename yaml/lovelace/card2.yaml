@@ -1,0 +1,83 @@
+type: grid
+cards:
+  - type: custom:apexcharts-card
+    apex_config:
+      chart:
+        height: 125px
+      yaxis:
+        show: true
+        forceNiceScale: true
+        decimalsInFloat: 0
+      stroke:
+        width: 3
+        curve: smooth
+      legend:
+        show: false
+    graph_span: 18h
+    header:
+      show: true
+      show_states: true
+      colorize_states: true
+    series:
+      - entity: sensor.half_bath_wifi_signal
+        name: ' '
+        group_by:
+          func: avg
+          duration: 45m
+  - type: custom:apexcharts-card
+    apex_config:
+      chart:
+        height: 125px
+      yaxis:
+        show: true
+        forceNiceScale: true
+        decimalsInFloat: 0
+      stroke:
+        width: 3
+        curve: smooth
+      legend:
+        show: false
+    graph_span: 18h
+    header:
+      show: true
+      show_states: true
+      colorize_states: true
+    series:
+      - entity: sensor.half_bath_internal_temp
+        name: ' '
+        group_by:
+          func: avg
+          duration: 45m
+  - show_name: true
+    show_icon: true
+    type: button
+    tap_action:
+      action: none
+    entity: sensor.half_bath_uptime
+    show_state: true
+    name: Uptime
+    hold_action:
+      action: none
+  - show_name: false
+    show_icon: true
+    type: button
+    tap_action:
+      action: none
+    entity: sensor.half_bath_wifi_signal
+    show_state: true
+    hold_action:
+      action: none
+  - show_name: false
+    show_icon: false
+    type: button
+    tap_action:
+      action: toggle
+  - show_name: true
+    show_icon: true
+    type: button
+    tap_action:
+      action: toggle
+    entity: button.half_bath_device_restart
+    name: Restart sensor
+    hold_action:
+      action: none
