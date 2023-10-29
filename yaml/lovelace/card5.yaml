@@ -1,0 +1,52 @@
+square: false
+type: grid
+cards:
+  - type: entities
+    entities:
+      - entity: switch.presence_config_mode
+        name: Config Mode
+    state_color: true
+  - type: conditional
+    conditions:
+      - entity: switch.presence_config_mode
+        state: 'on'
+    card:
+      type: entities
+      entities:
+        - entity: update.sensor_halfbath_firmware
+          name: Half Bath Firmware
+          secondary_info: last-changed
+        - entity: button.presence_device_restart
+        - entity: button.presence_ld2410_restart
+        - entity: button.presence_ld2410_factory_reset
+        - entity: switch.presence_ld2410_bluetooth
+        - entity: switch.presence_ld2410_engr_mode
+        - entity: select.presence_ld2410_baud_rate
+        - entity: select.presence_ld2410_light_function
+        - entity: select.presence_ld2410_outpin_level
+        - entity: select.presence_ld2410_dist_resolution
+        - entity: number.presence_ld2410_timeout
+        - entity: number.presence_max_move_gate
+        - entity: number.presence_max_still_gate
+        - entity: number.presence_g0_move_thold
+        - entity: number.presence_g0_still_thold
+        - entity: number.presence_g1_move_thold
+        - entity: number.presence_g1_still_thold
+        - entity: number.presence_g2_move_thold
+        - entity: number.presence_g2_still_thold
+        - entity: number.presence_g3_move_thold
+        - entity: number.presence_g3_still_thold
+        - entity: number.presence_g4_move_thold
+        - entity: number.presence_g4_still_thold
+        - entity: number.presence_g5_move_thold
+        - entity: number.presence_g5_still_thold
+        - entity: number.presence_g6_move_thold
+        - entity: number.presence_g6_still_thold
+        - entity: number.presence_g7_move_thold
+        - entity: number.presence_g7_still_thold
+        - entity: number.presence_g8_move_thold
+        - entity: number.presence_g8_still_thold
+        - entity: number.presence_ld2410_light_thold
+      show_header_toggle: false
+      title: Configuration
+columns: 1
