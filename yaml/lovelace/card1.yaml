@@ -9,11 +9,11 @@ cards:
         cards:
           - type: conditional
             conditions:
-              - entity: sensor.half_bath_iaq
+              - entity: sensor.presence_iaq
                 state: Excellent
             card:
               type: gauge
-              entity: sensor.half_bath_iaq_level
+              entity: sensor.presence_iaq_level
               name: Excellent
               needle: true
               min: 0
@@ -36,11 +36,11 @@ cards:
               unit: ' '
           - type: conditional
             conditions:
-              - entity: sensor.half_bath_iaq
+              - entity: sensor.presence_iaq
                 state: Good
             card:
               type: gauge
-              entity: sensor.half_bath_iaq_level
+              entity: sensor.presence_iaq_level
               name: Good
               needle: true
               min: 0
@@ -63,11 +63,11 @@ cards:
               unit: ' '
           - type: conditional
             conditions:
-              - entity: sensor.half_bath_iaq
+              - entity: sensor.presence_iaq
                 state: Lightly polluted
             card:
               type: gauge
-              entity: sensor.half_bath_iaq_level
+              entity: sensor.presence_iaq_level
               name: Lightly polluted
               needle: true
               min: 0
@@ -90,11 +90,11 @@ cards:
               unit: ' '
           - type: conditional
             conditions:
-              - entity: sensor.half_bath_iaq
+              - entity: sensor.presence_iaq
                 state: Moderately polluted
             card:
               type: gauge
-              entity: sensor.half_bath_iaq_level
+              entity: sensor.presence_iaq_level
               name: Moderately polluted
               needle: true
               min: 0
@@ -117,11 +117,11 @@ cards:
               unit: ' '
           - type: conditional
             conditions:
-              - entity: sensor.half_bath_iaq
+              - entity: sensor.presence_iaq
                 state: Heavily polluted
             card:
               type: gauge
-              entity: sensor.half_bath_iaq_level
+              entity: sensor.presence_iaq_level
               name: Heavily polluted
               needle: true
               min: 0
@@ -144,11 +144,11 @@ cards:
               unit: ' '
           - type: conditional
             conditions:
-              - entity: sensor.half_bath_iaq
+              - entity: sensor.presence_iaq
                 state: Severely polluted
             card:
               type: gauge
-              entity: sensor.half_bath_iaq_level
+              entity: sensor.presence_iaq_level
               name: Severely polluted
               needle: true
               min: 0
@@ -171,11 +171,11 @@ cards:
               unit: ' '
           - type: conditional
             conditions:
-              - entity: sensor.half_bath_iaq
+              - entity: sensor.presence_iaq
                 state: Extremely polluted
             card:
               type: gauge
-              entity: sensor.half_bath_iaq_level
+              entity: sensor.presence_iaq_level
               name: Extremely polluted
               needle: true
               min: 0
@@ -202,7 +202,7 @@ cards:
         cards:
           - type: conditional
             conditions:
-              - entity: binary_sensor.half_bath_presence
+              - entity: binary_sensor.presence_presence
                 state: 'on'
             card:
               show_name: true
@@ -210,13 +210,13 @@ cards:
               type: button
               tap_action:
                 action: none
-              entity: binary_sensor.half_bath_presence
+              entity: binary_sensor.presence_presence
               name: Occupied
               hold_action:
                 action: none
           - type: conditional
             conditions:
-              - entity: binary_sensor.half_bath_presence
+              - entity: binary_sensor.presence_presence
                 state: 'off'
             card:
               show_name: true
@@ -224,7 +224,7 @@ cards:
               type: button
               tap_action:
                 action: toggle
-              entity: binary_sensor.half_bath_presence
+              entity: binary_sensor.presence_presence
               name: Vacant
         columns: 1
     columns: 2
@@ -250,7 +250,7 @@ cards:
           show_states: true
           colorize_states: true
         series:
-          - entity: sensor.half_bath_temp
+          - entity: sensor.presence_temp
             name: ' '
             group_by:
               func: avg
@@ -274,7 +274,7 @@ cards:
           show_states: true
           colorize_states: true
         series:
-          - entity: sensor.half_bath_rel_humidity
+          - entity: sensor.presence_rel_humidity
             name: ' '
             group_by:
               func: avg
@@ -298,7 +298,7 @@ cards:
           show_states: true
           colorize_states: true
         series:
-          - entity: sensor.half_bath_abs_humidity
+          - entity: sensor.presence_abs_humidity
             name: ' '
             group_by:
               func: avg
@@ -322,7 +322,7 @@ cards:
           show_states: true
           colorize_states: true
         series:
-          - entity: sensor.half_bath_breath_voc
+          - entity: sensor.presence_breath_voc
             name: ' '
             group_by:
               func: avg
@@ -346,7 +346,7 @@ cards:
           show_states: true
           colorize_states: true
         series:
-          - entity: sensor.half_bath_co2
+          - entity: sensor.presence_co2
             name: ' '
             group_by:
               func: avg
@@ -370,7 +370,7 @@ cards:
           show_states: true
           colorize_states: true
         series:
-          - entity: sensor.half_bath_gas_resistance
+          - entity: sensor.presence_gas_resistance
             name: ' '
             group_by:
               func: avg
@@ -394,7 +394,7 @@ cards:
           show_states: true
           colorize_states: true
         series:
-          - entity: sensor.half_bath_pressure
+          - entity: sensor.presence_pressure
             name: ' '
             group_by:
               func: avg
@@ -418,7 +418,7 @@ cards:
           show_states: true
           colorize_states: true
         series:
-          - entity: sensor.half_bath_iaq_level
+          - entity: sensor.presence_iaq_level
             name: ' '
             group_by:
               func: avg
