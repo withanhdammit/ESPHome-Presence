@@ -19,7 +19,7 @@ cards:
       show_states: true
       colorize_states: true
     series:
-      - entity: sensor.half_bath_wifi_signal
+      - entity: sensor.presence_wifi_signal
         name: ' '
         group_by:
           func: avg
@@ -43,7 +43,7 @@ cards:
       show_states: true
       colorize_states: true
     series:
-      - entity: sensor.half_bath_internal_temp
+      - entity: sensor.presence_internal_temp
         name: ' '
         group_by:
           func: avg
@@ -53,7 +53,7 @@ cards:
     type: button
     tap_action:
       action: none
-    entity: sensor.half_bath_uptime
+    entity: sensor.presence_uptime
     show_state: true
     name: Uptime
     hold_action:
@@ -63,7 +63,7 @@ cards:
     type: button
     tap_action:
       action: none
-    entity: sensor.half_bath_wifi_signal
+    entity: sensor.presence_wifi_signal
     show_state: true
     hold_action:
       action: none
@@ -77,7 +77,7 @@ cards:
     type: button
     tap_action:
       action: toggle
-    entity: button.half_bath_device_restart
+    entity: button.presence_device_restart
     name: Restart sensor
     hold_action:
       action: none
