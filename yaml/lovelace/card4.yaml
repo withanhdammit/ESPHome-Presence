@@ -1,0 +1,32 @@
+type: entities
+entities:
+  - entity: sensor.half_bath_temp
+    secondary_info: last-changed
+  - entity: sensor.half_bath_rel_humidity
+    secondary_info: last-changed
+  - entity: sensor.half_bath_abs_humidity
+    secondary_info: last-changed
+  - entity: sensor.half_bath_breath_voc
+    secondary_info: last-changed
+  - entity: sensor.half_bath_co2
+    secondary_info: last-changed
+  - entity: sensor.half_bath_gas_resistance
+    secondary_info: last-changed
+  - entity: sensor.half_bath_pressure
+    secondary_info: last-changed
+  - entity: sensor.half_bath_iaq_level
+    secondary_info: last-changed
+  - entity: sensor.half_bath_iaq
+    secondary_info: last-changed
+  - entity: sensor.half_bath_iaq_accuracy
+    secondary_info: last-changed
+  - entity: sensor.half_bath_elevation
+    secondary_info: last-changed
+  - entity: sensor.half_bath_dewpoint
+    secondary_info: last-changed
+  - entity: sensor.half_bath_sealevel_inhg
+    secondary_info: last-changed
+  - entity: sensor.half_bath_sealevel_hpa
+    secondary_info: last-changed
+title: Environment
+state_color: true
