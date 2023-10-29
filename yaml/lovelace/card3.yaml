@@ -1,0 +1,11 @@
+type: entities
+entities:
+  - entity: sensor.half_bath_detection_distance
+  - entity: sensor.half_bath_move_energy
+  - entity: sensor.half_bath_moving_distance
+  - entity: binary_sensor.half_bath_moving_target
+  - entity: sensor.half_bath_still_energy
+  - entity: sensor.half_bath_still_distance
+  - entity: binary_sensor.half_bath_still_target
+title: Motion
+state_color: true
