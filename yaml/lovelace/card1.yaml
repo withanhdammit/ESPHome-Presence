@@ -1,0 +1,426 @@
+square: false
+type: grid
+cards:
+  - square: false
+    type: grid
+    cards:
+      - square: true
+        type: grid
+        cards:
+          - type: conditional
+            conditions:
+              - entity: sensor.half_bath_iaq
+                state: Excellent
+            card:
+              type: gauge
+              entity: sensor.half_bath_iaq_level
+              name: Excellent
+              needle: true
+              min: 0
+              max: 500
+              segments:
+                - from: 0
+                  color: '#00FF00'
+                - from: 51
+                  color: '#FFFF00'
+                - from: 101
+                  color: '#E2BF1F'
+                - from: 151
+                  color: '#FF7F00'
+                - from: 201
+                  color: '#FF0000'
+                - from: 251
+                  color: '#7F001F'
+                - from: 351
+                  color: '#7F3F7F'
+              unit: ' '
+          - type: conditional
+            conditions:
+              - entity: sensor.half_bath_iaq
+                state: Good
+            card:
+              type: gauge
+              entity: sensor.half_bath_iaq_level
+              name: Good
+              needle: true
+              min: 0
+              max: 500
+              segments:
+                - from: 0
+                  color: '#00FF00'
+                - from: 51
+                  color: '#FFFF00'
+                - from: 101
+                  color: '#E2BF1F'
+                - from: 151
+                  color: '#FF7F00'
+                - from: 201
+                  color: '#FF0000'
+                - from: 251
+                  color: '#7F001F'
+                - from: 351
+                  color: '#7F3F7F'
+              unit: ' '
+          - type: conditional
+            conditions:
+              - entity: sensor.half_bath_iaq
+                state: Lightly polluted
+            card:
+              type: gauge
+              entity: sensor.half_bath_iaq_level
+              name: Lightly polluted
+              needle: true
+              min: 0
+              max: 500
+              segments:
+                - from: 0
+                  color: '#00FF00'
+                - from: 51
+                  color: '#FFFF00'
+                - from: 101
+                  color: '#E2BF1F'
+                - from: 151
+                  color: '#FF7F00'
+                - from: 201
+                  color: '#FF0000'
+                - from: 251
+                  color: '#7F001F'
+                - from: 351
+                  color: '#7F3F7F'
+              unit: ' '
+          - type: conditional
+            conditions:
+              - entity: sensor.half_bath_iaq
+                state: Moderately polluted
+            card:
+              type: gauge
+              entity: sensor.half_bath_iaq_level
+              name: Moderately polluted
+              needle: true
+              min: 0
+              max: 500
+              segments:
+                - from: 0
+                  color: '#00FF00'
+                - from: 51
+                  color: '#FFFF00'
+                - from: 101
+                  color: '#E2BF1F'
+                - from: 151
+                  color: '#FF7F00'
+                - from: 201
+                  color: '#FF0000'
+                - from: 251
+                  color: '#7F001F'
+                - from: 351
+                  color: '#7F3F7F'
+              unit: ' '
+          - type: conditional
+            conditions:
+              - entity: sensor.half_bath_iaq
+                state: Heavily polluted
+            card:
+              type: gauge
+              entity: sensor.half_bath_iaq_level
+              name: Heavily polluted
+              needle: true
+              min: 0
+              max: 500
+              segments:
+                - from: 0
+                  color: '#00FF00'
+                - from: 51
+                  color: '#FFFF00'
+                - from: 101
+                  color: '#E2BF1F'
+                - from: 151
+                  color: '#FF7F00'
+                - from: 201
+                  color: '#FF0000'
+                - from: 251
+                  color: '#7F001F'
+                - from: 351
+                  color: '#7F3F7F'
+              unit: ' '
+          - type: conditional
+            conditions:
+              - entity: sensor.half_bath_iaq
+                state: Severely polluted
+            card:
+              type: gauge
+              entity: sensor.half_bath_iaq_level
+              name: Severely polluted
+              needle: true
+              min: 0
+              max: 500
+              segments:
+                - from: 0
+                  color: '#00FF00'
+                - from: 51
+                  color: '#FFFF00'
+                - from: 101
+                  color: '#E2BF1F'
+                - from: 151
+                  color: '#FF7F00'
+                - from: 201
+                  color: '#FF0000'
+                - from: 251
+                  color: '#7F001F'
+                - from: 351
+                  color: '#7F3F7F'
+              unit: ' '
+          - type: conditional
+            conditions:
+              - entity: sensor.half_bath_iaq
+                state: Extremely polluted
+            card:
+              type: gauge
+              entity: sensor.half_bath_iaq_level
+              name: Extremely polluted
+              needle: true
+              min: 0
+              max: 500
+              segments:
+                - from: 0
+                  color: '#00FF00'
+                - from: 51
+                  color: '#FFFF00'
+                - from: 101
+                  color: '#E2BF1F'
+                - from: 151
+                  color: '#FF7F00'
+                - from: 201
+                  color: '#FF0000'
+                - from: 251
+                  color: '#7F001F'
+                - from: 351
+                  color: '#7F3F7F'
+              unit: ' '
+        columns: 1
+      - square: true
+        type: grid
+        cards:
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.half_bath_presence
+                state: 'on'
+            card:
+              show_name: true
+              show_icon: true
+              type: button
+              tap_action:
+                action: none
+              entity: binary_sensor.half_bath_presence
+              name: Occupied
+              hold_action:
+                action: none
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.half_bath_presence
+                state: 'off'
+            card:
+              show_name: true
+              show_icon: true
+              type: button
+              tap_action:
+                action: toggle
+              entity: binary_sensor.half_bath_presence
+              name: Vacant
+        columns: 1
+    columns: 2
+  - square: false
+    type: grid
+    cards:
+      - type: custom:apexcharts-card
+        apex_config:
+          chart:
+            height: 125px
+          yaxis:
+            show: true
+            forceNiceScale: true
+            decimalsInFloat: 0
+          stroke:
+            width: 3
+            curve: smooth
+          legend:
+            show: false
+        graph_span: 18h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.half_bath_temp
+            name: ' '
+            group_by:
+              func: avg
+              duration: 45m
+      - type: custom:apexcharts-card
+        apex_config:
+          chart:
+            height: 125px
+          yaxis:
+            show: true
+            forceNiceScale: true
+            decimalsInFloat: 0
+          stroke:
+            width: 3
+            curve: smooth
+          legend:
+            show: false
+        graph_span: 18h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.half_bath_rel_humidity
+            name: ' '
+            group_by:
+              func: avg
+              duration: 45m
+      - type: custom:apexcharts-card
+        apex_config:
+          chart:
+            height: 125px
+          yaxis:
+            show: true
+            forceNiceScale: true
+            decimalsInFloat: 0
+          stroke:
+            width: 3
+            curve: smooth
+          legend:
+            show: false
+        graph_span: 18h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.half_bath_abs_humidity
+            name: ' '
+            group_by:
+              func: avg
+              duration: 45m
+      - type: custom:apexcharts-card
+        apex_config:
+          chart:
+            height: 125px
+          yaxis:
+            show: true
+            forceNiceScale: true
+            decimalsInFloat: 0
+          stroke:
+            width: 3
+            curve: smooth
+          legend:
+            show: false
+        graph_span: 18h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.half_bath_breath_voc
+            name: ' '
+            group_by:
+              func: avg
+              duration: 45m
+      - type: custom:apexcharts-card
+        apex_config:
+          chart:
+            height: 125px
+          yaxis:
+            show: true
+            forceNiceScale: true
+            decimalsInFloat: 0
+          stroke:
+            width: 3
+            curve: smooth
+          legend:
+            show: false
+        graph_span: 18h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.half_bath_co2
+            name: ' '
+            group_by:
+              func: avg
+              duration: 45m
+      - type: custom:apexcharts-card
+        apex_config:
+          chart:
+            height: 125px
+          yaxis:
+            show: true
+            forceNiceScale: true
+            decimalsInFloat: 0
+          stroke:
+            width: 3
+            curve: smooth
+          legend:
+            show: false
+        graph_span: 18h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.half_bath_gas_resistance
+            name: ' '
+            group_by:
+              func: avg
+              duration: 45m
+      - type: custom:apexcharts-card
+        apex_config:
+          chart:
+            height: 125px
+          yaxis:
+            show: true
+            forceNiceScale: true
+            decimalsInFloat: 0
+          stroke:
+            width: 3
+            curve: smooth
+          legend:
+            show: false
+        graph_span: 18h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.half_bath_pressure
+            name: ' '
+            group_by:
+              func: avg
+              duration: 45m
+      - type: custom:apexcharts-card
+        apex_config:
+          chart:
+            height: 125px
+          yaxis:
+            show: true
+            forceNiceScale: true
+            decimalsInFloat: 0
+          stroke:
+            width: 3
+            curve: smooth
+          legend:
+            show: false
+        graph_span: 18h
+        header:
+          show: true
+          show_states: true
+          colorize_states: true
+        series:
+          - entity: sensor.half_bath_iaq_level
+            name: ' '
+            group_by:
+              func: avg
+              duration: 45m
+columns: 1
