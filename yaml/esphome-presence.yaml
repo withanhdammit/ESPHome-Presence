@@ -1,0 +1,396 @@
+substitutions:
+  sensorname: sensor-presence
+  entitysub: Presence 
+  ipaddress: 10.42.100.113
+  domain: !secret domain
+
+esphome:
+  name: $sensorname
+
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    #type: esp-idf  #Suggest Use ESP-IDF Framework, or Plug Out the UART Cable Might Cause ESP32 Hang. 
+    type: arduino
+    version: recommended
+# Enable logging
+logger:
+  level: INFO #You can also use DEBUG
+  #baud_rate: 0
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_key
+
+ota:
+  password: !secret ota_password
+
+wifi:
+  ssid: !secret iot_ssid
+  password: !secret iot_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: $sensorname
+    password: !secret esphome_password
+
+  use_address: $ipaddress #$sensorname.$domain
+  manual_ip:
+    static_ip: $ipaddress
+    subnet: !secret subnet
+    gateway: !secret gateway
+    dns1: !secret dns_iot
+
+captive_portal:
+
+web_server:
+  port: 80
+  auth:
+    username: !secret web_username
+    password: !secret ap_password
+
+# Device config
+i2c:
+  sda: GPIO18
+  scl: GPIO19
+  scan: true
+
+uart:
+  id: UART2
+  rx_pin: GPIO21  #For ESP32, you can use any pin, Recommend Use UART_2, Don't use UART_0 (GPIO3), It might cause boot fail or system hang
+  tx_pin: GPIO17  #For ESP32, you can use any pin, Recommend Use UART_2, Don't use UART_0 (GPIO1), It might cause boot fail or system hang
+  baud_rate: 256000
+  data_bits: 8
+  stop_bits: 1
+  parity: NONE
+
+ld2410:
+  id: my_ld2410
+  uart_id: UART2
+
+bme680_bsec:
+  address: 0x77 # 0x76 or 0x77
+  temperature_offset: 0 # i.e. if temp reads 5 deg high, set this to 5
+  iaq_mode: static # static or mobile (on a person or moveable device)
+  sample_rate: lp # lp=low power (3 sec) or ulp=ultra low power (5 min)
+                  # note you can set on a per-sensor level
+  state_save_interval: 6h
+
+status_led:
+  pin:
+    number: GPIO2 #ESP32 OnBoard LED
+    inverted: false
+
+binary_sensor:
+  - platform: ld2410
+    has_target:
+      name: $entitysub Presence
+      device_class: occupancy
+    has_moving_target:
+      name: $entitysub Moving Target
+    has_still_target:
+      name: $entitysub Still Target
+    out_pin_presence_status:
+      name: $entitysub GPIO Presence Status
+      device_class: occupancy
+  - platform: gpio
+    pin: GPIO16
+    name: $entitysub GPIO pin Presence
+    device_class: occupancy
+
+sensor:
+  - platform: wifi_signal
+    name: "$entitysub WiFi Signal"
+    update_interval: 60s
+  - platform: uptime
+    name: "$entitysub Uptime"
+    update_interval: 60s
+  - platform: internal_temperature
+    name: "$entitysub internal temp"
+
+  # LD2410C
+  - platform: ld2410
+    light:
+      name: $entitysub LD2410 light
+    moving_distance:
+      name : $entitysub Moving Distance
+    still_distance:
+      name: $entitysub Still Distance
+    moving_energy:
+      name: $entitysub Move Energy
+    still_energy:
+      name: $entitysub Still Energy
+    detection_distance:
+      name: $entitysub Detection Distance
+    g0:
+      move_energy:
+        name: $entitysub g0 move energy
+      still_energy:
+        name: $entitysub g0 still energy
+    g1:
+      move_energy:
+        name: $entitysub g1 move energy
+      still_energy:
+        name: $entitysub g1 still energy
+    g2:
+      move_energy:
+        name: $entitysub g2 move energy
+      still_energy:
+        name: $entitysub g2 still energy
+    g3:
+      move_energy:
+        name: $entitysub g3 move energy
+      still_energy:
+        name: $entitysub g3 still energy
+    g4:
+      move_energy:
+        name: $entitysub g4 move energy
+      still_energy:
+        name: $entitysub g4 still energy
+    g5:
+      move_energy:
+        name: $entitysub g5 move energy
+      still_energy:
+        name: $entitysub g5 still energy
+    g6:
+      move_energy:
+        name: $entitysub g6 move energy
+      still_energy:
+        name: $entitysub g6 still energy
+    g7:
+      move_energy:
+        name: $entitysub g7 move energy
+      still_energy:
+        name: $entitysub g7 still energy
+    g8:
+      move_energy:
+        name: $entitysub g8 move energy
+      still_energy:
+        name: $entitysub g8 still energy
+
+  # BME680
+  - platform: bme680_bsec
+    temperature:
+      name: "$entitysub Temp" # in °C
+      id: temperature
+#      sample_rate: ulp
+#      filters:
+#        - median
+    humidity:
+      name: "$entitysub Rel Humidity" # in %
+      id: humidity
+#      sample_rate: lp
+#      filters:
+#        - median
+    pressure:
+      name: "$entitysub Pressure" # in HPa
+      id: pressure
+#      sample_rate: ulp
+#      filters:
+#        - median
+    gas_resistance:
+      name: "$entitysub Gas Resistance" # in Ω
+#      filters:
+#        - median
+    iaq:
+      name: "$entitysub IAQ Level" # numeric of 0, 1, 2, 3
+      id: iaq
+    co2_equivalent:
+      name: "$entitysub CO2" # in ppm
+#      filters:
+#        - median
+    breath_voc_equivalent:
+      name: "$entitysub Breath VOC" # in ppm
+#      filters:
+#        - median
+  - platform: absolute_humidity
+    name: "$entitysub Abs Humidity"
+    temperature: temperature
+    humidity: humidity
+  - platform: template
+    name: "$entitysub Dewpoint"
+    icon: 'mdi:thermometer-water'
+    update_interval: 15s
+    unit_of_measurement: °F
+    lambda: |-
+      return ((float(id(temperature).state) - ((100.0 - float(id(humidity).state))/5.0)) * 9.0/5.0) + 32.0;
+  - platform: template
+    name: "$entitysub Sealevel InHg"
+    id: sealevel_inhg
+    lambda: |-
+      const float STANDARD_ALTITUDE = 0.6; // in meters, see note
+      return id(pressure).state / powf(1 - ((0.0065 * STANDARD_ALTITUDE) /
+        (id(temperature).state + (0.0065 * STANDARD_ALTITUDE) + 273.15)), 5.257) *
+        0.02952998057228486; // in inHg
+    update_interval: 15s
+    unit_of_measurement: 'inHg'
+    accuracy_decimals: 2
+  - platform: template
+    name: "$entitysub Sealevel hPa"
+    id: sealevel_hpa
+    lambda: |-
+      const float STANDARD_ALTITUDE = 0.6; // in meters, see note
+      return id(pressure).state / powf(1 - ((0.0065 * STANDARD_ALTITUDE) /
+        (id(temperature).state + (0.0065 * STANDARD_ALTITUDE) + 273.15)), 5.257); // in hPa
+    update_interval: 15s
+    unit_of_measurement: 'hPa'
+    accuracy_decimals: 2
+  - platform: template
+    name: "$entitysub Elevation"
+    lambda: |-
+      const float STANDARD_SEA_LEVEL_PRESSURE = id(sealevel_hpa).state; //in hPa, see note
+      return ((id(temperature).state + 273.15) / 0.0065) *
+        (powf((STANDARD_SEA_LEVEL_PRESSURE / id(pressure).state), 0.190234) - 1); // in meter
+    update_interval: 15s
+    icon: 'mdi:elevation-rise'
+    unit_of_measurement: 'm'
+
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: $entitysub IP
+    ssid:
+      name: $entitysub SSID
+    bssid:
+      name: $entitysub BSSID
+    mac_address:
+      name: $entitysub MAC
+  - platform: bme680_bsec
+    iaq_accuracy:
+      # IAQ accuracy as a text value of Stabilizing, Uncertain, Calibrating, Calibrated
+      name: "$entitysub IAQ Accuracy"
+  - platform: template
+    name: "$entitysub IAQ"
+    icon: "mdi:checkbox-marked-circle-outline"
+    update_interval: 15s
+    lambda: |-
+      if ( int(id(iaq).state) <= 50) {
+        return {"Excellent"};
+      }
+      else if (int(id(iaq).state) >= 51 && int(id(iaq).state) <= 100) {
+        return {"Good"};
+      }
+      else if (int(id(iaq).state) >= 101 && int(id(iaq).state) <= 150) {
+        return {"Lightly polluted"};
+      }
+      else if (int(id(iaq).state) >= 151 && int(id(iaq).state) <= 200) {
+        return {"Moderately polluted"};
+      }
+      else if (int(id(iaq).state) >= 201 && int(id(iaq).state) <= 250) {
+        return {"Heavily polluted"};
+      }
+      else if (int(id(iaq).state) >= 251 && int(id(iaq).state) <= 350) {
+        return {"Severely polluted"};
+      }
+      else if (int(id(iaq).state) >= 351) {
+        return {"Extremely polluted"};
+      }
+      else {
+        return {"error"};
+      }
+
+  - platform: ld2410
+    version:
+      name: "$entitysub LD2410 Firmware"
+    mac_address:
+      name: "$entitysub LD2410 MAC"
+
+number:
+  - platform: ld2410
+    timeout:
+      name: $entitysub LD2410 timeout
+    light_threshold:
+      name: $entitysub LD2410 light thold
+    max_move_distance_gate:
+      name: $entitysub max move gate
+    max_still_distance_gate:
+      name: $entitysub max still gate
+    g0:
+      move_threshold:
+        name: $entitysub g0 move thold
+      still_threshold:
+        name: $entitysub g0 still thold
+    g1:
+      move_threshold:
+        name: $entitysub g1 move thold
+      still_threshold:
+        name: $entitysub g1 still thold
+    g2:
+      move_threshold:
+        name: $entitysub g2 move thold
+      still_threshold:
+        name: $entitysub g2 still thold
+    g3:
+      move_threshold:
+        name: $entitysub g3 move thold
+      still_threshold:
+        name: $entitysub g3 still thold
+    g4:
+      move_threshold:
+        name: $entitysub g4 move thold
+      still_threshold:
+        name: $entitysub g4 still thold
+    g5:
+      move_threshold:
+        name: $entitysub g5 move thold
+      still_threshold:
+        name: $entitysub g5 still thold
+    g6:
+      move_threshold:
+        name: $entitysub g6 move thold
+      still_threshold:
+        name: $entitysub g6 still thold
+    g7:
+      move_threshold:
+        name: $entitysub g7 move thold
+      still_threshold:
+        name: $entitysub g7 still thold
+    g8:
+      move_threshold:
+        name: $entitysub g8 move thold
+      still_threshold:
+        name: $entitysub g8 still thold
+
+button:
+  - platform: ld2410
+    factory_reset:
+      name: "$entitysub LD2410 Factory Reset"
+    restart:
+      name: "$entitysub LD2410 Restart"
+    query_params:
+      name: $entitysub LD2410 query params
+  - platform: restart
+    name: "$entitysub Device Restart"
+
+select:
+  - platform: ld2410
+    distance_resolution:
+      name: "$entitysub LD2410 Dist resolution"
+    baud_rate:
+      name: "$entitysub LD2410 Baud rate"
+    light_function:
+      name: $entitysub LD2410 Light function
+    out_pin_level:
+      name: $entitysub LD2410 Outpin level
+
+switch:
+  - platform: ld2410
+    engineering_mode:
+      name: "$entitysub LD2410 Engr mode"
+    bluetooth:
+      name: "$entitysub LD2410 Bluetooth"
+  - platform: template
+    name: $entitysub Config Mode
+    id: config_mode
+    turn_on_action:
+      - switch.template.publish:
+         id: config_mode
+         state: ON
+    turn_off_action:
+      - switch.template.publish:
+          id: config_mode
+          state: OFF
+    optimistic: False
+    icon: mdi:gesture-swipe
+  
