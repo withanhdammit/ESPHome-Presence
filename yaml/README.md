@@ -1,1 +1,2 @@
 
+# YAML for ESPHome config
