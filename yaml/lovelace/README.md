@@ -8,17 +8,22 @@
 * Gauge
 * Grid
 
-## Card 1
+Card 1
+
 <img src=/pics/card1.png width=200>
 
-## Card 2
+Card 2
+
 <img src=/pics/card2.png width=200>
 
-## Card 3
+Card 3
+
 <img src=/pics/card3.png width=200>
 
-## Card 4
+Card 4
+
 <img src=/pics/card4.png width=200>
 
-## Card 5
+Card 5
+
 <img src=/pics/card5.png width=200>
