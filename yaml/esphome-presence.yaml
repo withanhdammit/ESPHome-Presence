@@ -77,16 +77,22 @@ bme680_bsec:
                   # note you can set on a per-sensor level
   state_save_interval: 6h
 
-status_led:
-  pin:
-    number: GPIO2 #ESP32 OnBoard LED
-    inverted: false
+#status_led:  # If using the status-led, go into the switch section and turn off the presence_led and remove the on_press and on_release from the presence binary_sensor
+#  pin:
+#    number: GPIO2 #ESP32 OnBoard LED
+#    inverted: false
 
 binary_sensor:
   - platform: ld2410
     has_target:
       name: $entitysub Presence
       device_class: occupancy
+      on_press:
+        then:
+          - switch.turn_on: presence_led
+      on_release:
+        then:
+          - switch.turn_off: presence_led
     has_moving_target:
       name: $entitysub Moving Target
     has_still_target:
@@ -393,4 +399,7 @@ switch:
           state: OFF
     optimistic: False
     icon: mdi:gesture-swipe
-  
+  - platform: gpio
+    id: presence_led
+    pin: GPIO2
+    internal: true
