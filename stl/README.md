@@ -1,5 +1,4 @@
 
 # STL files for 3D Printing
 
-* [Base](/stl/base.stl)
-* [Lid](/stl/lid.stl)
+* Available at [Printables](https://www.printables.com/model/925856) [](https://www.printables.com/model/925856)
