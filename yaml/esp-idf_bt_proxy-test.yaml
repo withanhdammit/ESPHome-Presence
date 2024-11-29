@@ -189,6 +189,7 @@ sensor:
       id: pressure
     gas_resistance:
       name: "${entitysub} Gas Resistance" # in Ω
+      id: gas_resistance
     address: 0x77
   - platform: template
     name: "${entitysub} IAQ Estimate"
