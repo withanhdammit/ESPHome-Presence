@@ -97,6 +97,16 @@ binary_sensor:
     name: "${entitysub} LD2410 GPIO pin Presence"
     device_class: occupancy
 
+globals:
+  - id: temp_offset
+    type: float
+    restore_value: true
+    initial_value: '0'
+  - id: humid_offset
+    type: float
+    restore_value: true
+    initial_value: '0'
+
 sensor:
   - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
     name: "${entitysub} WiFi Signal dB"
@@ -179,11 +189,15 @@ sensor:
   # BME680
   - platform: bme680
     temperature:
-      name: "${entitysub} Temp" # in °C
+      name: "${entitysub} Temp" # in °C but displays °F
       id: temperature
+      filters:
+        - offset: !lambda return id(temp_offset);
     humidity:
       name: "${entitysub} Rel Humidity" # in %
       id: humidity
+      filters:
+        - offset: !lambda return id(humid_offset);
     pressure:
       name: "${entitysub} Pressure" # in HPa
       id: pressure
@@ -191,6 +205,11 @@ sensor:
       name: "${entitysub} Gas Resistance" # in Ω
       id: gas_resistance
     address: 0x77
+  - platform: copy # Reports the temp in °C for config the offset
+    source_id: temperature
+    name: "${entitysub} Temp Offset Base °C"
+    unit_of_measurement: "°C"
+    entity_category: "config"
   - platform: template
     name: "${entitysub} IAQ Estimate"
     id: iaq
@@ -336,6 +355,38 @@ text_sensor:
       name: "${entitysub} LD2410 MAC"
 
 number:
+  - platform: template
+    name: "${entitysub} Temp Offset °C"
+    id: temp_offset_adjust
+    min_value: -99
+    max_value: 99
+    mode: BOX
+    step: 0.1
+    initial_value: 0
+    restore_value: true
+    optimistic: true
+    unit_of_measurement: '°C'
+    entity_category: config
+    on_value:
+      then:
+        - lambda: |-
+            id(temp_offset) = x;
+  - platform: template
+    name: "AHT Humidity Offset"
+    id: humid_offset_adjust
+    min_value: -99
+    max_value: 99
+    mode: BOX
+    step: 1
+    initial_value: 0
+    restore_value: true
+    optimistic: true
+    unit_of_measurement: '%'
+    entity_category: config
+    on_value:
+      then:
+        - lambda: |-
+            id(humid_offset) = x;
   - platform: ld2410
     timeout:
       name: "${entitysub} LD2410 Timeout"
