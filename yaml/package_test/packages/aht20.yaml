@@ -1,0 +1,84 @@
+esphome:
+  name: ${sensorname}
+
+# Device config
+i2c:
+  sda: GPIO18
+  scl: GPIO19
+  scan: true
+
+globals:
+  - id: temp_offset
+    type: float
+    restore_value: true
+    initial_value: '0.0'
+  - id: humid_offset
+    type: float
+    restore_value: true
+    initial_value: '0.0'
+
+sensor:
+  # AHT20
+  - platform: aht10
+    variant: AHT20
+    temperature:
+      name: "${entitysub} Temp" # in °C
+      id: temperature
+      filters:
+        - offset: !lambda return id(temp_offset);
+    humidity:
+      name: "${entitysub} Humidity Rel" # in %
+      id: humidity
+      filters:
+        - offset: !lambda return id(humid_offset);
+  - platform: template
+    name: "${entitysub} Temp in °C"
+    unit_of_measurement: "°C"
+    icon: mdi:thermometer
+    lambda: |-
+      return id(temperature).state;
+  - platform: absolute_humidity
+    name: "${entitysub} Humidity Abs"
+    temperature: temperature
+    humidity: humidity
+  - platform: template
+    name: "${entitysub} Dewpoint"
+    icon: 'mdi:thermometer-water'
+    update_interval: 15s
+    unit_of_measurement: °F
+    lambda: |-
+      return ((float(id(temperature).state) - ((100.0 - float(id(humidity).state))/5.0)) * 9.0/5.0) + 32.0;
+
+number:
+  - platform: template
+    name: "${entitysub} Temp Offset"
+    id: temp_offset_adjust
+    min_value: -99
+    max_value: 99
+    mode: BOX
+    step: 0.1
+    initial_value: 0
+    restore_value: true
+    optimistic: true
+    unit_of_measurement: '°C'
+    entity_category: config
+    on_value:
+      then:
+        - lambda: |-
+            id(temp_offset) = x;
+  - platform: template
+    name: "${entitysub} Humidity Offset"
+    id: humid_offset_adjust
+    min_value: -99
+    max_value: 99
+    mode: BOX
+    step: 0.1
+    initial_value: 0
+    restore_value: true
+    optimistic: true
+    unit_of_measurement: '%'
+    entity_category: config
+    on_value:
+      then:
+        - lambda: |-
+            id(humid_offset) = x;
