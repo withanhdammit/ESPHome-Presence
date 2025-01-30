@@ -1,0 +1,14 @@
+ubstitutions:
+  sensorname: sensor-livingroom
+  entitysub: Livingroom
+  ipaddress: 10.42.100.102
+  domain: !secret domain
+
+packages:
+  mcu: !include packages/std_esp32-d1-mini_esp-idf.yaml
+  default: !include packages/default.yaml
+  presence: !include packages/ld2410c.yaml
+  environment: !include packages/aht20.yaml
+
+bluetooth_proxy:
+  active: true
