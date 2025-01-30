@@ -1,0 +1,208 @@
+esphome:
+  name: ${sensorname}
+
+#LD2410C
+uart:
+  id: UART2
+  rx_pin: GPIO21
+  tx_pin: GPIO17
+  baud_rate: 256000
+  data_bits: 8
+  stop_bits: 1
+  parity: NONE
+
+ld2410:
+  id: my_ld2410
+  uart_id: UART2
+
+binary_sensor:
+  - platform: ld2410
+    has_target:
+      name: "${entitysub} LD2410 Presence"
+      device_class: occupancy
+      on_press:
+        then:
+          - switch.turn_on: presence_led
+      on_release:
+        then:
+          - switch.turn_off: presence_led
+    has_moving_target:
+      name: "${entitysub} LD2410 Moving Target"
+    has_still_target:
+      name: "${entitysub} LD2410 Still Target"
+    out_pin_presence_status:
+      name: "${entitysub} LD2410 GPIO Presence Status"
+      device_class: occupancy
+  - platform: gpio
+    pin: GPIO16
+    name: "${entitysub} LD2410 GPIO pin Presence"
+    device_class: occupancy
+
+sensor:
+  # LD2410C
+  - platform: ld2410
+    light:
+      name: "${entitysub} LD2410 Light"
+    moving_distance:
+      name: "${entitysub} LD2410 Moving Distance"
+    moving_energy:
+      name: "${entitysub} LD2410 Moving Energy"
+    still_distance:
+      name: "${entitysub} LD2410 Still Distance"
+    still_energy:
+      name: "${entitysub} LD2410 Still Energy"
+    detection_distance:
+      name: "${entitysub} LD2410 Detection Distance"
+    g0:
+      move_energy:
+        name: "${entitysub} g0 move energy"
+      still_energy:
+        name: "${entitysub} g0 still energy"
+    g1:
+      move_energy:
+        name: "${entitysub} g1 move energy"
+      still_energy:
+        name: "${entitysub} g1 still energy"
+    g2:
+      move_energy:
+        name: "${entitysub} g2 move energy"
+      still_energy:
+        name: "${entitysub} g2 still energy"
+    g3:
+      move_energy:
+        name: "${entitysub} g3 move energy"
+      still_energy:
+        name: "${entitysub} g3 still energy"
+    g4:
+      move_energy:
+        name: "${entitysub} g4 move energy"
+      still_energy:
+        name: "${entitysub} g4 still energy"
+    g5:
+      move_energy:
+        name: "${entitysub} g5 move energy"
+      still_energy:
+        name: "${entitysub} g5 still energy"
+    g6:
+      move_energy:
+        name: "${entitysub} g6 move energy"
+      still_energy:
+        name: "${entitysub} g6 still energy"
+    g7:
+      move_energy:
+        name: "${entitysub} g7 move energy"
+      still_energy:
+        name: "${entitysub} g7 still energy"
+    g8:
+      move_energy:
+        name: "${entitysub} g8 move energy"
+      still_energy:
+        name: "${entitysub} g8 still energy"
+
+switch:
+#  - platform: ld2410
+#    engineering_mode:
+#      name: "$entitysub LD2410 Engr mode"
+#    bluetooth:
+#      name: "$entitysub LD2410 Bluetooth"
+  - platform: template
+    name: "${entitysub} Config Mode"
+    entity_category: "config"
+    id: config_mode
+    turn_on_action:
+      - switch.template.publish:
+          id: config_mode
+          state: ON
+    turn_off_action:
+      - switch.template.publish:
+          id: config_mode
+          state: OFF
+    optimistic: False
+    icon: mdi:gesture-swipe
+  - platform: gpio
+    id: presence_led
+    pin: GPIO2
+    internal: true
+
+text_sensor:
+  - platform: ld2410
+    version:
+      name: "${entitysub} LD2410 Firmware"
+    mac_address:
+      name: "${entitysub} LD2410 MAC"
+
+number:
+  - platform: ld2410
+    timeout:
+      name: "${entitysub} LD2410 Timeout"
+    light_threshold:
+      name: "${entitysub} LD2410 Light THold"
+    max_move_distance_gate:
+      name: "${entitysub} LD2410 Max Moving Gate"
+    max_still_distance_gate:
+      name: "${entitysub} LD2410 Max Still Gate"
+    g0:
+      move_threshold:
+        name: "${entitysub} g0 move thold"
+      still_threshold:
+        name: "${entitysub} g0 still thold"
+    g1:
+      move_threshold:
+        name: "${entitysub} g1 move thold"
+      still_threshold:
+        name: "${entitysub} g1 still thold"
+    g2:
+      move_threshold:
+        name: "${entitysub} g2 move thold"
+      still_threshold:
+        name: "${entitysub} g2 still thold"
+    g3:
+      move_threshold:
+        name: "${entitysub} g3 move thold"
+      still_threshold:
+        name: "${entitysub} g3 still thold"
+    g4:
+      move_threshold:
+        name: "${entitysub} g4 move thold"
+      still_threshold:
+        name: "${entitysub} g4 still thold"
+    g5:
+      move_threshold:
+        name: "${entitysub} g5 move thold"
+      still_threshold:
+        name: "${entitysub} g5 still thold"
+    g6:
+      move_threshold:
+        name: "${entitysub} g6 move thold"
+      still_threshold:
+        name: "${entitysub} g6 still thold"
+    g7:
+      move_threshold:
+        name: "${entitysub} g7 move thold"
+      still_threshold:
+        name: "${entitysub} g7 still thold"
+    g8:
+      move_threshold:
+        name: "${entitysub} g8 move thold"
+      still_threshold:
+        name: "${entitysub} g8 still thold"
+
+button:
+  - platform: ld2410
+    factory_reset:
+      name: "${entitysub} LD2410 Factory Reset"
+    restart:
+      name: "${entitysub} LD2410 Restart"
+    query_params:
+      name: "${entitysub} LD2410 Query Params"
+
+select:
+  - platform: ld2410
+    distance_resolution:
+      name: "${entitysub} LD2410 Resolution"
+    baud_rate:
+      name: "${entitysub} LD2410 Baud"
+    light_function:
+      name: "${entitysub} LD2410 Light Function"
+    out_pin_level:
+      name: "${entitysub} LD2410 Outpin Level"
