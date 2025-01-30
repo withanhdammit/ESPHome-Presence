@@ -1,0 +1,82 @@
+# Enable logging
+logger:
+  #level: INFO
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret esphome_api_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret iot_ssid
+  password: !secret iot_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${sensorname}
+    password: !secret esphome_password
+
+  use_address: ${ipaddress} #${sensorname}.${domain}
+  manual_ip:
+    static_ip: ${ipaddress}
+    subnet: !secret subnet
+    gateway: !secret gateway
+    dns1: !secret dns_iot
+
+captive_portal:
+
+web_server:
+  port: 80
+  js_include: "./v2/www.js"
+  js_url: ""
+  auth:
+    username: !secret web_username
+    password: !secret ap_password
+
+switch:
+  - platform: restart
+    name: "${entitysub} Restart"
+  - platform: factory_reset
+    name: "${entitysub} Factory Reset"
+  - platform: safe_mode
+    name: "${entitysub} Safe Mode"
+
+text_sensor:
+  - platform: version
+    name: "${entitysub} Version"
+  - platform: wifi_info
+    ip_address:
+      name: "${entitysub} IP"
+    ssid:
+      name: "${entitysub} SSID"
+    bssid:
+      name: "${entitysub} AP MAC"
+    mac_address:
+      name: "${entitysub} MAC"
+    dns_address:
+      name: "${entitysub} DNS"
+
+binary_sensor:
+  - platform: status
+    name: "${entitysub} Status"
+
+sensor:
+  - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
+    name: "${entitysub} WiFi Signal dB"
+    id: wifi_signal_db
+    update_interval: 60s
+    entity_category: "diagnostic"
+  - platform: copy # Reports the WiFi signal strength in %
+    source_id: wifi_signal_db
+    name: "${entitysub} WiFi Signal pct"
+    filters:
+      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
+    unit_of_measurement: "%"
+    entity_category: "diagnostic"
+  - platform: uptime
+    name: "${entitysub} Uptime"
+    update_interval: 60s
