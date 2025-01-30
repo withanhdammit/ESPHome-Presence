@@ -1,0 +1,11 @@
+esp32:
+  board: wemos_d1_mini32
+  framework:
+    type: esp-idf
+
+esphome:
+  name: ${sensorname}
+
+sensor:
+  - platform: internal_temperature
+    name: "${entitysub} internal temp"
