@@ -1,4 +1,4 @@
-ubstitutions:
+substitutions:
   sensorname: sensor-livingroom
   entitysub: Livingroom
   ipaddress: 10.42.100.102
